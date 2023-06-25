@@ -1,3 +1,4 @@
+import FlipState from './FlipState';
 import Group from './Group';
 
 class Area {
@@ -15,6 +16,20 @@ class Area {
 
   get index(): number {
     return this._index;
+  }
+
+  cloneSetMemberFlipState(
+    groupIndex: number,
+    memberId: string,
+    flipState: FlipState
+  ): Area {
+    const groups = this._groups.map((group) =>
+      group.index === groupIndex
+        ? group.cloneSetMemberFlipState(memberId, flipState)
+        : group.clone()
+    );
+
+    return new Area(this._index, groups);
   }
 
   clone(): Area {

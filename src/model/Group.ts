@@ -1,3 +1,4 @@
+import FlipState from './FlipState';
 import Member from './Member';
 
 class Group {
@@ -15,6 +16,14 @@ class Group {
 
   get index(): number {
     return this._index;
+  }
+
+  cloneSetMemberFlipState(id: string, flipState: FlipState): Group {
+    const members = this._members.map((member) =>
+      member.id === id ? member.cloneSetFlipState(flipState) : member.clone()
+    );
+
+    return new Group(this.index, members);
   }
 
   clone(): Group {
